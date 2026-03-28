@@ -1,0 +1,13 @@
+package com.example.demo.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.example.demo.entity.BookEntity;
+
+public interface BookRepo extends JpaRepository<BookEntity, Integer>{
+	@Query("SELECT b.genre, COUNT(b) FROM BookEntity b GROUP BY b.genre")
+	List<Object[]> countBooksByGenre();
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your shopping cart - Review your books and proceed to checkout.">
+    <title>Shopping Cart - BookVerse</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span class="logo-text">Book<span>Verse</span></span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/catalog" class="nav-link">Books</a></li>
+                <li><a href="/catalog?category=bestsellers" class="nav-link">Bestsellers</a></li>
+                <li><a href="/catalog?category=new" class="nav-link">New Arrivals</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="nav-icon-btn" aria-label="Search">🔍</button>
+                <button class="nav-icon-btn" aria-label="Wishlist">♡</button>
+                <a href="/cart" class="nav-icon-btn" aria-label="Cart">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Cart Content -->
+    <main class="cart-page page-content">
+        <div class="container">
+            <!-- Cart Header -->
+            <div class="cart-header">
+                <h1 class="cart-title">
+                    Shopping Cart
+                    <span class="cart-count-badge">0 items</span>
+                </h1>
+            </div>
+
+            <!-- Cart Layout -->
+            <div class="cart-layout">
+                <!-- Cart Items -->
+                <div class="cart-items">
+                    <!-- Cart items loaded by JavaScript -->
+                </div>
+
+                <!-- Cart Summary -->
+                <aside class="cart-summary">
+                    <h2 class="summary-title">Order Summary</h2>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value summary-subtotal">₹0.00</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span class="summary-label">Shipping</span>
+                        <span class="summary-value summary-shipping">₹4.99</span>
+                    </div>
+                    
+                    <div class="summary-row discount" style="display: none;">
+                        <span class="summary-label">Discount</span>
+                        <span class="summary-value">-₹0.00</span>
+                    </div>
+                    
+                    <p class="shipping-message" style="font-size: 0.85rem; margin: 12px 0; color: var(--text-light);">
+                        Add <strong>₹50.00</strong> more for free shipping
+                    </p>
+                    
+                    <div class="summary-divider"></div>
+                    
+                    <div class="summary-total">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value summary-total-value">₹0.00</span>
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="promo-section">
+                        <h4 class="promo-title">Promo Code</h4>
+                        <form class="promo-form">
+                            <input type="text" class="promo-input" placeholder="Enter code">
+                            <button type="submit" class="promo-btn">Apply</button>
+                        </form>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button class="btn btn-accent btn-checkout" onclick="proceedToCheckout()">
+                        Proceed to Checkout
+                    </button>
+                    
+                    <div class="secure-checkout">
+                        <span>🔒</span>
+                        <span>Secure Checkout</span>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="payment-methods">
+                        <div class="payment-icon">VISA</div>
+                        <div class="payment-icon">MC</div>
+                        <div class="payment-icon">AMEX</div>
+                        <div class="payment-icon">PP</div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Continue Shopping -->
+            <div class="continue-shopping">
+                <a href="/catalog" class="continue-link">
+                    ← Continue Shopping
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon">📚</div>
+                        <span class="logo-text" style="color: white;">Book<span>Verse</span></span>
+                    </a>
+                    <p>Your destination for discovering amazing books.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="/catalog">All Books</a></li>
+                        <li><a href="/catalog?category=new">New Arrivals</a></li>
+                        <li><a href="/catalog?category=bestsellers">Bestsellers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 BookVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/common.js"></script>
+    <script src="/js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin • Books</title>
+<link rel="stylesheet" href="/css/common.css">
+
+<style>
+body {
+    background: var(--bg-light);
+}
+
+/* container */
+.admin-wrap {
+    max-width: 1200px;
+    margin: 50px auto;
+    background: white;
+    padding: 32px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
+/* header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.admin-header h2 {
+    color: var(--primary);
+}
+
+.add-btn {
+    background: var(--accent);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 12px;
+}
+
+td {
+    padding: 16px 6px;
+    border-bottom: 1px solid #f2f2f2;
+    vertical-align: middle;
+}
+
+tr:hover {
+    background: #fafafa;
+}
+
+/* serial number */
+.serial {
+    color: var(--text-light);
+    width: 40px;
+}
+
+/* text columns */
+.book-title {
+    font-weight: 600;
+}
+
+.genre {
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.price {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* cover thumbnail */
+.cover-thumb {
+    width: 48px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* action buttons */
+.action-btn {
+    background: var(--primary);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.action-btn.delete {
+    background: #dc2626;
+    margin-left: 6px;
+}
+
+/* placeholder row when no books (static preview now) */
+.empty {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-light);
+}
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-edit:hover {
+    opacity: 0.85;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    opacity: 0.85;
+}
+.cover-thumb {
+    width: 45px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status.active {
+    background: #e6f7ef;
+    color: #1e7e34;
+}
+
+.status.inactive {
+    background: #fdecea;
+    color: #c82333;
+}
+.stock {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.stock.good {
+    background: #e6f7ef;
+    color: #1e7e34;
+}
+
+.stock.low {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.stock.out {
+    background: #fdecea;
+    color: #c82333;
+}
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.isbn {
+    font-size: 0.75rem;
+    color: #888;
+}
+.inventory-row {
+    transition: 0.2s ease;
+}
+
+.inventory-row:hover {
+    background: #f8f9fb;
+}
+</style>
+</head>
+
+<body>
+
+<div class="admin-wrap">
+
+    <div class="admin-header">
+        <h2>Books Inventory</h2>
+
+        <a th:href="@{/admin/addBook}" class="add-btn">+ Add Book</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Sr.</th>
+                <th>Book</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+<tr th:each="b, stat : ${books}" class="inventory-row">
+
+    <!-- Serial -->
+    <td class="serial" th:text="${stat.count}"></td> 
+
+    <!-- Title -->
+    <td class="title-col">
+        <div class="title-wrapper">
+            <span class="book-title" th:text="${b.title}"></span>
+            <span class="isbn" th:text="${b.isbn}"></span>
+        </div>
+    </td>
+
+    <!-- Author -->
+    <td th:text="${b.author}"></td>
+
+    <!-- Genre -->
+    <td class="genre" th:text="${b.genre}"></td>
+
+    <!-- Price -->
+    <td class="price">₹ <span th:text="${b.price}"></span></td>
+
+    <!-- Stock -->
+    <td>
+        <span th:if="${b.stock > 10}" class="stock good"
+              th:text="${b.stock}"></span>
+
+        <span th:if="${b.stock > 0 and b.stock <= 10}" class="stock low"
+              th:text="${b.stock}"></span>
+
+        <span th:if="${b.stock == 0}" class="stock out">Out</span>
+    </td>
+
+    <!-- Status -->
+    <td>
+        <span th:if="${b.active}" class="status active">Active</span>
+        <span th:if="${!b.active}" class="status inactive">Inactive</span>
+    </td>
+
+    <!-- Cover -->
+    <td>
+        <img th:src="${b.imageUrl}" class="cover-thumb">
+    </td>
+
+    <!-- Actions -->
+    <td class="actions">
+        <a th:href="@{/admin/editBook/{id}(id=${b.id})}" class="btn-edit">Edit</a>
+        <a th:href="@{/admin/deleteBook/{id}(id=${b.id})}"  onclick="return confirm('Are you sure you want to deactivate this book?')" class="btn-delete">Delete</a>
+    </td>
+
+</tr>
+
+</tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

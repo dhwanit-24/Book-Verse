@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book details and information. Add to cart or wishlist.">
+    <title>Book Details - BookVerse</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/book-detail.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span class="logo-text">Book<span>Verse</span></span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/catalog" class="nav-link">Books</a></li>
+                <li><a href="/catalog?category=bestsellers" class="nav-link">Bestsellers</a></li>
+                <li><a href="/catalog?category=new" class="nav-link">New Arrivals</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="nav-icon-btn" aria-label="Search">🔍</button>
+                <button class="nav-icon-btn" aria-label="Wishlist">♡</button>
+                <a href="/cart" class="nav-icon-btn" aria-label="Cart">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Book Detail Content -->
+    <main class="book-detail-page">
+        <!-- Breadcrumb -->
+        <div class="detail-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="/">Home</a>
+                    <span>›</span>
+                    <a href="/catalog">Books</a>
+                    <span>›</span>
+                    <span th:text="${book.title}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book Details Section -->
+        <section class="book-detail-section">
+            <div class="container">
+                <div class="book-detail-grid">
+                    <!-- Book Gallery -->
+                    <div class="book-gallery">
+                        <div class="main-image">
+                           <img th:src="${book.imageUrl}" class="book-cover-large" alt="cover">
+                        </div>
+                        <div class="thumbnail-gallery">
+                            <div class="thumbnail active">
+                                <div class="thumbnail-book"></div>
+                            </div>
+                            <div class="thumbnail">
+                                <div class="thumbnail-book"></div>
+                            </div>
+                            <div class="thumbnail">
+                                <div class="thumbnail-book"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Book Info -->
+                    <div class="book-info">
+                        <span class="book-category-tag" th:text="${book.genre}"></span>
+						<h1 class="book-detail-title" th:text="${book.title}"></h1>
+						<p class="book-author-link">
+						    by <span th:text="${book.author}"></span>
+						</p>
+
+                        <!-- Rating -->
+                        <div class="rating-section">
+						    <span style="color:#888;">Ratings coming soon</span>
+						</div>
+
+                        <!-- Price -->
+                        <div class="price-section">
+                            <div class="price-section">
+							    <span class="current-price">₹ <span th:text="${book.price}"></span></span>
+							    <div class="stock-status">
+							        <span class="stock-dot"></span>
+							        Available
+							    </div>
+							</div>
+                        </div>
+						
+                        <!-- Purchase -->
+                        <div class="purchase-section">
+                            <div class="quantity-wrapper">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-control">
+                                    <button class="qty-btn minus">−</button>
+                                    <input type="number" class="qty-input" value="1" min="1" max="99">
+                                    <button class="qty-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-accent btn-add-cart" onclick="addToCartFromDetail()">
+                                    🛒 Add to Cart
+                                </button>
+                                <button class="btn-wishlist" aria-label="Add to Wishlist">
+                                    ♡
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Meta Info -->
+                        <div class="book-meta">
+						    <div class="meta-item">
+						        <span class="meta-label">Genre</span>
+						        <span class="meta-value" th:text="${book.genre}"></span>
+						    </div>
+						    <div class="meta-item">
+						        <span class="meta-label">Author</span>
+						        <span class="meta-value" th:text="${book.author}"></span>
+						    </div>
+						</div>
+
+                <!-- Tabs -->
+                <div class="tabs-section">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="details">Details</button>
+                        <button class="tab-btn" data-tab="reviews">Reviews</button>
+                        <button class="tab-btn" data-tab="author">About Author</button>
+                    </div>
+
+                    <div class="tab-content active" data-tab="details">
+                        <div class="book-meta" style="max-width: 600px;">
+                            <div class="meta-item">
+                                <span class="meta-label">Format</span>
+                                <span class="meta-value">Hardcover, 342 pages</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Dimensions</span>
+                                <span class="meta-value">6 x 1.2 x 9 inches</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Weight</span>
+                                <span class="meta-value">1.2 pounds</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Age Range</span>
+                                <span class="meta-value">18 and up</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" data-tab="reviews" id="reviews">
+                        <div class="reviews-header">
+                            <h3>Customer Reviews</h3>
+                            <button class="btn btn-outline">Write a Review</button>
+                        </div>
+                        <div class="reviews-list">
+                            <!-- Reviews loaded by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="tab-content" data-tab="author">
+                        <div class="author-info">
+                            <h3>About Sarah Mitchell</h3>
+                            <p>Sarah Mitchell is an award-winning author known for her psychological thrillers and mystery novels. With over 15 books published, she has captivated readers worldwide with her intricate plots and complex characters.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Books -->
+        <section class="related-section">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <span class="section-subtitle">You May Also Like</span>
+                        <h2 class="section-title">Related Books</h2>
+                    </div>
+                </div>
+                <div class="related-books-grid book-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <!-- Related books loaded by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon">📚</div>
+                        <span class="logo-text" style="color: white;">Book<span>Verse</span></span>
+                    </a>
+                    <p>Your destination for discovering amazing books.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="/catalog">All Books</a></li>
+                        <li><a href="/catalog?category=new">New Arrivals</a></li>
+                        <li><a href="/catalog?category=bestsellers">Bestsellers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 BookVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+   
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Heaven - Login / Sign up</title>
+    <link rel="stylesheet" href="/css/loginStyle.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <div class="library-side">
+            <h1>📚 Book Heaven</h1>
+            <p>Step into a world of stories, knowledge, and imagination.</p>
+        </div>
+
+        <div class="form-container">
+            <div class="form-toggle">
+                <button id="loginBtn" class="active">Login</button>
+                <button id="signupBtn">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="form active-form" id="loginForm" method="post" th:action="@{/doLogin}">
+                <h2>Welcome Back</h2>
+
+                <input type="email" placeholder="Email Address" name="email" required>
+                <input type="password" placeholder="Password" name="password" required>
+				<p th:if="${error}" th:text="${error}" style="color:red"></p>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            
+            
+
+            <!-- Sign up Form -->
+            <form class="form" id="signupForm" method="post" th:action="@{/signupData}">
+                <h2>Create Account</h2>
+
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+<script>
+    const loginBtn = document.getElementById("loginBtn");
+    const signupBtn = document.getElementById("signupBtn");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    loginBtn.onclick = () => {
+        loginForm.classList.add("active-form");
+        signupForm.classList.remove("active-form");
+        loginBtn.classList.add("active");
+        signupBtn.classList.remove("active");
+    };
+
+    signupBtn.onclick = () => {
+        signupForm.classList.add("active-form");
+        loginForm.classList.remove("active-form");
+        signupBtn.classList.add("active");
+        loginBtn.classList.remove("active");
+    };
+</script>
+
+</body>
+</html>

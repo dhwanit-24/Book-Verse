@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse our complete collection of books. Filter by genre, price, and rating to find your perfect read.">
+    <title>Book Catalog - BookVerse</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/catalog.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span class="logo-text">Book<span>Verse</span></span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/catalog" class="nav-link active">Books</a></li>
+                <li><a href="/catalog?category=bestsellers" class="nav-link">Bestsellers</a></li>
+                <li><a href="/catalog?category=new" class="nav-link">New Arrivals</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="nav-icon-btn" aria-label="Search">🔍</button>
+                <button class="nav-icon-btn" aria-label="Wishlist">♡</button>
+                <a href="/cart" class="nav-icon-btn" aria-label="Cart">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container page-header-content">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>›</span>
+                <span>All Books</span>
+            </div>
+            <h1 class="page-title">Book Catalog</h1>
+            <p class="page-subtitle">Explore our complete collection of amazing books</p>
+        </div>
+    </section>
+
+    <!-- Catalog Content -->
+    <main class="catalog-page">
+        <div class="container">
+            <button class="mobile-filter-btn">
+                🎛️ Show Filters
+            </button>
+            
+            <div class="catalog-layout">
+                <!-- Sidebar Filters -->
+                <aside class="catalog-sidebar">
+                    <!-- Search -->
+                    <div class="filter-card">
+                        <h3 class="filter-title">Search</h3>
+                        <div class="search-input-wrapper">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" class="search-input" placeholder="Search books...">
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="filter-card">
+                        <h3 class="filter-title">
+                            Categories
+                            <button class="filter-toggle">−</button>
+                        </h3>
+                        <div class="filter-options">
+                            <label class="filter-option">
+                                <input type="checkbox" class="filter-checkbox" data-category="Mystery">
+                                <span class="filter-label">Mystery</span>
+                                <span class="filter-count">(42)</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" class="filter-checkbox" data-category="Sci-Fi">
+                                <span class="filter-label">Sci-Fi</span>
+                                <span class="filter-count">(38)</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" class="filter-checkbox" data-category="Romance">
+                                <span class="filter-label">Romance</span>
+                                <span class="filter-count">(56)</span>
+                            </label>
+                            <label class="filter-option">
+                                <input type="checkbox" class="filter-checkbox" data-category="Fantasy">
+                                <span class="filter-label">Fantasy</span>
+                                <span class="filter-count">(45)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="filter-card">
+                        <h3 class="filter-title">Price Range</h3>
+                        <div class="price-range-wrapper">
+                            <input type="range" class="price-slider" min="0" max="50" value="50">
+                            <div class="price-range-labels">
+                                <span>₹0</span>
+                                <span class="price-max">₹50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="filter-card">
+                        <h3 class="filter-title">Rating</h3>
+                        <div class="filter-options">
+                            <div class="rating-option" data-rating="4">
+                                <span class="stars">★★★★☆</span>
+                                <span class="rating-text">& Up</span>
+                            </div>
+                            <div class="rating-option" data-rating="3">
+                                <span class="stars">★★★☆☆</span>
+                                <span class="rating-text">& Up</span>
+                            </div>
+                            <div class="rating-option" data-rating="2">
+                                <span class="stars">★★☆☆☆</span>
+                                <span class="rating-text">& Up</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clear Filters -->
+                    <button class="clear-filters-btn">Clear All Filters</button>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="catalog-main">
+                    <!-- Toolbar -->
+                    <div class="catalog-toolbar">
+                        <span class="results-count">
+                            Showing <strong>9</strong> of <strong>9</strong> books
+                        </span>
+                        <div class="toolbar-actions">
+                            <select class="sort-select">
+                                <option value="featured">Featured</option>
+                                <option value="newest">Newest</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Highest Rated</option>
+                            </select>
+                            <div class="view-toggle">
+                                <button class="view-btn active" data-view="grid" aria-label="Grid view">▦</button>
+                                <button class="view-btn" data-view="list" aria-label="List view">☰</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Books Grid -->
+                    <div class="book-grid">
+               
+
+    					<div class="book-card" th:each="b : ${books}">
+
+					        <div class="book-card-image">
+					            <img th:src="${b.imageUrl}" alt="cover" th:href="@{/book/{id}(id=${b.id})}">
+					        </div>
+
+						        <div class="book-card-content">
+						
+						            <span class="book-category" th:text="${b.genre}"></span>
+						
+						            <h4 class="book-title">
+						                <a th:href="@{/book/{id}(id=${b.id})}" th:text="${b.title}"></a>
+						            </h4>
+						
+						            <p class="book-author" th:text="${b.author}"></p>
+						
+						            <div class="book-footer">
+						                <span class="book-price">
+						                    ₹ <span th:text="${b.price}"></span>
+						                </span>
+						            </div>
+						            
+						            <a th:href="@{/book/{id}(id=${b.id})}" class="buy-btn">
+									    Buy Now
+									</a>
+						
+						        </div>
+    					</div>
+
+					</div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <!-- Pagination will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon">📚</div>
+                        <span class="logo-text" style="color: white;">Book<span>Verse</span></span>
+                    </a>
+                    <p>Your destination for discovering amazing books.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="/catalog">All Books</a></li>
+                        <li><a href="/catalog?category=new">New Arrivals</a></li>
+                        <li><a href="/catalog?category=bestsellers">Bestsellers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 BookVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/common.js"></script>
+    <script src="/js/catalog.js"></script>
+</body>
+</html>

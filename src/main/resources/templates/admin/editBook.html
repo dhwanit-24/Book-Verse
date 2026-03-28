@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Book</title>
+<link rel="stylesheet" href="/css/common.css">
+
+<style>
+body { background: var(--bg-light); }
+
+.admin-container {
+    max-width: 900px;
+    margin: 60px auto;
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    padding: 40px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group { display: flex; flex-direction: column; }
+.full { grid-column: span 2; }
+
+label { font-weight: 600; margin-bottom: 6px; }
+
+input, select, textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.save-btn {
+    background: var(--accent);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+}
+
+.cancel-btn {
+    text-decoration: none;
+    color: var(--text-light);
+}
+</style>
+</head>
+
+<body>
+
+<div class="admin-container">
+<form th:action="@{/admin/updateBook}" method="post">
+	<input type="hidden" name="id" th:value="${book.id}">
+
+<h2>Edit Book</h2>
+
+<!-- IMPORTANT: same BookEntity binding -->
+	<div class="form-grid">
+	
+	    <!-- Book Title -->
+	    <div class="form-group full">
+	        <label>Book Title</label>
+	        <input type="text" name="title" th:value="${book.title}">
+	    </div>
+	
+	    <!-- Author -->
+	    <div class="form-group">
+	        <label>Author</label>
+	        <input type="text" name="author" th:value="${book.author}">
+	    </div>
+	
+	    <!-- Genre -->
+	    <div class="form-group">
+	        <label>Genre</label>
+	        <select name="genre" th:value="${book.genre}">
+	            	<option>Biography</option>
+                    <option>Buisness</option>
+                    <option>Comics</option>
+                    <option>Computers</option>
+                    <option>Cooking</option>
+                    <option>Fiction</option>
+                    <option>Games</option>
+                    <option>History</option>
+                    <option>Juvenile Fiction</option>
+                    <option>Medical</option>
+                    <option>Nature</option>
+                    <option>Psycology</option>
+                    <option>Self-Help</option>
+                    <option>Social Science</option>
+	        </select>
+	    </div>
+	
+	    <!-- Price -->
+	    <div class="form-group">
+	        <label>Price (₹)</label>
+	        <input type="number" name="price" step="0.01" th:value="${book.price}">
+	    </div>
+	
+	    <!-- Cover Image Path -->
+	    <div class="form-group">
+	        <label>Cover Image Path</label>
+	        <input type="text" name="imageUrl" th:value="${book.imageUrl}">
+	    </div>
+	
+	    <!-- Description -->
+	    <div class="form-group full">
+	        <label>Description</label>
+	        <textarea name="description" th:text="${book.description}"></textarea>
+	    </div>
+	
+	    <!-- ISBN -->
+	    <div class="form-group">
+	        <label>ISBN</label>
+	        <input type="text" name="isbn" th:value="${book.isbn}">
+	    </div>
+	
+	    <!-- Publisher -->
+	    <div class="form-group">
+	        <label>Publisher</label>
+	        <input type="text" name="publisher" th:value="${book.publisher}">
+	    </div>
+	
+	    <!-- Published Year -->
+	    <div class="form-group">
+	        <label>Published Year</label>
+	        <input type="number" name="publishedYear" th:value="${book.publishedYear}">
+	    </div>
+	
+	    <!-- Stock Quantity -->
+	    <div class="form-group">
+	        <label>Stock Quantity</label>
+	        <input type="number" name="stock" min="0" th:value="${book.stock}">
+	    </div>
+	
+	    <!-- Visibility -->
+	    <div class="form-group">
+	        <label>
+	            <input type="hidden" name="active" value="false">
+
+				<input type="checkbox"
+				       name="active"
+				       value="true"
+				       th:checked="${book.active}">
+	            Active (Visible in Store)
+	        </label>
+	    </div>
+	
+	</div>
+
+    <div class="actions">
+        <a href="/admin/inventory" class="cancel-btn">Cancel</a>
+        <button type="submit" class="save-btn">Update Book</button>
+    </div>
+
+</form>
+
+</div>
+
+</body>
+</html>
