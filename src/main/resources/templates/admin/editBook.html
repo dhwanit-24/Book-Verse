@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Edit Book</title>
@@ -77,27 +77,29 @@ input, select, textarea {
 	        <label>Author</label>
 	        <input type="text" name="author" th:value="${book.author}">
 	    </div>
-	
+	    
+	    
+	    
 	    <!-- Genre -->
 	    <div class="form-group">
 	        <label>Genre</label>
-	        <select name="genre" th:value="${book.genre}">
-	            	<option>Biography</option>
-                    <option>Buisness</option>
-                    <option>Comics</option>
-                    <option>Computers</option>
-                    <option>Cooking</option>
-                    <option>Fiction</option>
-                    <option>Games</option>
-                    <option>History</option>
-                    <option>Juvenile Fiction</option>
-                    <option>Medical</option>
-                    <option>Nature</option>
-                    <option>Psycology</option>
-                    <option>Self-Help</option>
-                    <option>Social Science</option>
-	        </select>
-	    </div>
+	       <select name="genre" id="genreSelect">
+			    <option value="Biography">Biography</option>
+			    <option value="Business">Business</option>
+			    <option value="Comics">Comics</option>
+			    <option value="Computers">Computers</option>
+			    <option value="Cooking">Cooking</option>
+			    <option value="Fiction">Fiction</option>
+			    <option value="Games">Games</option>
+			    <option value="History">History</option>
+			    <option value="Juvenile Fiction">Juvenile Fiction</option>
+			    <option value="Medical">Medical</option>
+			    <option value="Nature">Nature</option>
+			    <option value="Psychology">Psychology</option>
+			    <option value="Self-Help">Self-Help</option>
+			    <option value="Social Science">Social Science</option>
+			</select>
+			</div>
 	
 	    <!-- Price -->
 	    <div class="form-group">
@@ -152,6 +154,7 @@ input, select, textarea {
 				       th:checked="${book.active}">
 	            Active (Visible in Store)
 	        </label>
+	        <p th:text="${book.genre}">test</p>
 	    </div>
 	
 	</div>
@@ -164,6 +167,9 @@ input, select, textarea {
 </form>
 
 </div>
-
+<span id="savedGenre" th:text="${book.genre}" style="display:none;"></span>
+<script>
+    document.getElementById("genreSelect").value = document.getElementById("savedGenre").innerText.trim();
+</script>
 </body>
 </html>
