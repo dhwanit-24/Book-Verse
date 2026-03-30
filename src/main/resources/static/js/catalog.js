@@ -47,7 +47,7 @@ if (searchInput) {
 	        bookCards.forEach(function(card) {
 				
 	            const genre = card.querySelector('.book-category').innerText.trim();
-				console.log('Card genre: [' + genre + '] Selected: ' + JSON.stringify(selectedCategories));
+				//console.log('Card genre: [' + genre + '] Selected: ' + JSON.stringify(selectedCategories));
 	            if (selectedCategories.length === 0 || selectedCategories.map(c => c.toLowerCase().trim()).includes(genre.toLowerCase().trim())) {
 					card.style.display = 'block';
 				} else {
@@ -58,14 +58,35 @@ if (searchInput) {
 	});
 
     // Price range
-    const priceSlider = document.querySelector('.price-slider');
-    if (priceSlider) {
-        priceSlider.addEventListener('input', function() {
-            activeFilters.priceRange[1] = parseInt(this.value);
-            document.querySelector('.price-max').textContent = '₹' + this.value;
-            applyFilters();
-        });
-    }
+	const priceSlider = document.querySelector('.price-slider');
+	if (priceSlider) {
+	    // get all prices from book cards
+	    const allPrices = Array.from(document.querySelectorAll('.book-price span')).map(el => parseFloat(el.innerText.trim()));
+	    const minPrice = Math.min(...allPrices);
+	    const maxPrice = Math.max(...allPrices);
+
+	    // set slider range dynamically
+	    priceSlider.min = minPrice;
+	    priceSlider.max = maxPrice;
+	    priceSlider.value = maxPrice;
+	    document.querySelector('.price-max').textContent = '₹' + maxPrice;
+
+	    priceSlider.addEventListener('input', function() {
+	        const selectedMax = parseFloat(this.value);
+	        document.querySelector('.price-max').textContent = '₹' + selectedMax;
+
+	        const bookCards = document.querySelectorAll('.book-card');
+	        bookCards.forEach(function(card) {
+	            const priceEl = card.querySelector('.book-price span');
+	            const price = parseFloat(priceEl.innerText.trim());
+	            if (price <= selectedMax) {
+	                card.style.display = 'block';
+	            } else {
+	                card.style.display = 'none';
+	            }
+	        });
+	    });
+	}
 
     // Rating filter
     document.querySelectorAll('.rating-option').forEach(option => {
