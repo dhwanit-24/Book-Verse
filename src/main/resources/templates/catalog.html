@@ -83,33 +83,18 @@
 
                     <!-- Categories -->
                     <div class="filter-card">
-                        <h3 class="filter-title">
-                            Categories
-                            <button class="filter-toggle">−</button>
-                        </h3>
-                        <div class="filter-options">
-                            <label class="filter-option">
-                                <input type="checkbox" class="filter-checkbox" data-category="Mystery">
-                                <span class="filter-label">Mystery</span>
-                                <span class="filter-count">(42)</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" class="filter-checkbox" data-category="Sci-Fi">
-                                <span class="filter-label">Sci-Fi</span>
-                                <span class="filter-count">(38)</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" class="filter-checkbox" data-category="Romance">
-                                <span class="filter-label">Romance</span>
-                                <span class="filter-count">(56)</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" class="filter-checkbox" data-category="Fantasy">
-                                <span class="filter-label">Fantasy</span>
-                                <span class="filter-count">(45)</span>
-                            </label>
-                        </div>
-                    </div>
+					    <h3 class="filter-title">
+					        Categories
+					        <button class="filter-toggle" onclick="toggleFilter(this)">−</button>
+					    </h3>
+					    <div class="filter-options">
+					        <label class="filter-option" th:each="entry : ${categoryCounts}">
+					            <input type="checkbox" class="filter-checkbox" th:data-category="${entry.key}">
+					            <span class="filter-label" th:text="${entry.key}"></span>
+					            <span class="filter-count" th:text="'(' + ${entry.value} + ')'"></span>
+					        </label>
+					    </div>
+					</div>
 
                     <!-- Price Range -->
                     <div class="filter-card">

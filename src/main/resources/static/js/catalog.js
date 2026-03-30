@@ -374,3 +374,16 @@ document.addEventListener('DOMContentLoaded', function() {
     initSorting();
     initPagination();
 });
+
+
+// book catagory toggle button 
+function toggleFilter(btn) {
+    const options = btn.closest('.filter-card').querySelector('.filter-options');
+    if (options.style.display === 'none') {
+        options.style.display = 'block';
+        btn.textContent = '−';
+    } else {
+        options.style.display = 'none';
+        btn.textContent = '+';
+    }
+}

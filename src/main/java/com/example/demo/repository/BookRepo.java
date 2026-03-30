@@ -12,4 +12,7 @@ public interface BookRepo extends JpaRepository<BookEntity, Integer>{
 	List<Object[]> countBooksByGenre();
 	
 	long countByActiveTrue();
+	
+	@Query("SELECT b.genre, COUNT(b) FROM BookEntity b WHERE b.active = true AND b.stock > 0 GROUP BY b.genre ORDER BY b.genre ASC")
+	List<Object[]> countAvailableBooksByGenre();
 }
