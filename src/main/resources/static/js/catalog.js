@@ -31,17 +31,31 @@ if (searchInput) {
 
 }
     // Category filters
-    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const category = this.dataset.category;
-            if (this.checked) {
-                activeFilters.categories.push(category);
-            } else {
-                activeFilters.categories = activeFilters.categories.filter(c => c !== category);
-            }
-            applyFilters();
-        });
-    });
+	const bookCards = document.querySelectorAll('.book-card');
+	console.log('Total cards found:', bookCards.length);
+	bookCards.forEach(function(card) {
+	    const genre = card.querySelector('.book-category');
+	    console.log('Genre element:', genre);
+	});
+	
+	document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+	    checkbox.addEventListener('change', function() {
+	        const checkedBoxes = document.querySelectorAll('.filter-checkbox:checked');
+	        const selectedCategories = Array.from(checkedBoxes).map(cb => cb.dataset.category);
+	        
+	        const bookCards = document.querySelectorAll('.book-card');
+	        bookCards.forEach(function(card) {
+				
+	            const genre = card.querySelector('.book-category').innerText.trim();
+				console.log('Card genre: [' + genre + '] Selected: ' + JSON.stringify(selectedCategories));
+	            if (selectedCategories.length === 0 || selectedCategories.map(c => c.toLowerCase().trim()).includes(genre.toLowerCase().trim())) {
+					card.style.display = 'block';
+				} else {
+					 card.style.display = 'none';
+				}
+	        });
+	    });
+	});
 
     // Price range
     const priceSlider = document.querySelector('.price-slider');
