@@ -60,6 +60,8 @@ public class HomeController {
     @GetMapping("/catalog")
     public String catalog(Model model) {
     	model.addAttribute("books", bookRepo.findAll());
+    	model.addAttribute("totalBooks", bookRepo.count());
+    	model.addAttribute("activeBooks", bookRepo.countByActiveTrue());
     	return "catalog";
     }
     
