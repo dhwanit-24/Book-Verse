@@ -73,6 +73,14 @@
     position: sticky;
     top: 100px;
     height: fit-content;
+    height: 100vh;		
+    overflow-y: auto;
+	position: sticky;
+	top: 0;
+	scrollbar-width: none;
+}
+.catalog-sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .filter-card {
