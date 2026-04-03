@@ -50,7 +50,11 @@ public class AdminController {
     @GetMapping("/deleteBook/{id}")
     public String deleteBook(@PathVariable Integer id)
     {
-        bookRepo.deleteById(id);
+        BookEntity book = bookRepo.findById(id).orElse(null);
+        if(book != null) {
+            book.setActive(false);
+            bookRepo.save(book);
+        }
         return "redirect:/admin/inventory";
     }
     

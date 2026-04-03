@@ -23,7 +23,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
 
-        List<BookEntity> allBooks = bookRepo.findAll();
+        List<BookEntity> allBooks = bookRepo.findByActiveTrue();
         //featured books random 3
         Collections.shuffle(allBooks);        // random order
         List<BookEntity> featured = allBooks.stream().limit(3).toList();
@@ -59,7 +59,7 @@ public class HomeController {
     
     @GetMapping("/catalog")
     public String catalog(Model model) {
-    	model.addAttribute("books", bookRepo.findAll());
+    	model.addAttribute("books", bookRepo.findByActiveTrue());
     	model.addAttribute("totalBooks", bookRepo.count());
     	model.addAttribute("activeBooks", bookRepo.countByActiveTrue());
     	
