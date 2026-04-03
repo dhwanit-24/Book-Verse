@@ -1,37 +1,9 @@
-/* ============================================
-   CATALOG PAGE JAVASCRIPT
-   ============================================ */
-
-document.addEventListener('DOMContentLoaded', function() {
-    initFilters();
-    initViewToggle();
-    initSorting();
-    initPagination();
-    loadBooks();
-});
-
-/* ============================================
-   BOOKS DATA
-   ============================================ */
-/*const allBooks = [
-    { id: 'book-1', title: 'The Silent Echo', author: 'Sarah Mitchell', category: 'Mystery', price: 240.00, originalPrice: 290.00, rating: 4.8, reviews: 234, badge: 'Bestseller', color: '#0d5c63', description: 'A gripping mystery that will keep you on the edge of your seat.' },
-    { id: 'book-2', title: 'Beyond the Horizon', author: 'James Chen', category: 'Sci-Fi', price: 190.00, rating: 4.6, reviews: 189, color: '#ff6b5b', description: 'An epic space adventure spanning galaxies.' },
-    { id: 'book-3', title: 'Whispers of Time', author: 'Elena Rodriguez', category: 'Romance', price: 210.00, originalPrice: 260.00, rating: 4.9, reviews: 312, badge: 'New', color: '#6366f1', description: 'A beautiful love story that transcends time.' },
-    { id: 'book-4', title: 'The Last Kingdom', author: 'Michael Stone', category: 'Fantasy', price: 270.00, rating: 4.7, reviews: 156, color: '#8b5cf6', description: 'Enter a world of magic and adventure.' },
-    { id: 'book-5', title: 'Digital Dreams', author: 'Anna Park', category: 'Sci-Fi', price: 220.00, rating: 4.5, reviews: 98, color: '#14b8a6', description: 'When AI becomes indistinguishable from reality.' },
-    { id: 'book-6', title: 'Midnight Gardens', author: 'David Foster', category: 'Mystery', price: 180.00, rating: 4.4, reviews: 167, color: '#f59e0b', description: 'Dark secrets lurk beneath the beautiful gardens.' },
-    { id: 'book-7', title: 'The Heart Remembers', author: 'Lisa Wang', category: 'Romance', price: 160.00, rating: 4.8, reviews: 289, color: '#ec4899', description: 'A touching story of love lost and found.' },
-    { id: 'book-8', title: 'Empire of Shadows', author: 'Robert King', category: 'Fantasy', price: 290.00, rating: 4.9, reviews: 445, badge: 'Editor\'s Pick', color: '#7c3aed', description: 'An epic fantasy saga begins.' },
-    { id: 'book-9', title: 'The Quantum Paradox', author: 'Dr. Emily Nash', category: 'Sci-Fi', price: 250.00, rating: 4.6, reviews: 123, color: '#06b6d4', description: 'Where physics meets philosophy.' }
-];*/
-
-let filteredBooks = [...allBooks];
+let filteredBooks = [];
 let currentPage = 1;
 const booksPerPage = 6;
 
-/* ============================================
-   FILTERS
-   ============================================ */
+ //FILTERS
+   
 let activeFilters = {
     search: '',
     categories: [],
@@ -39,38 +11,82 @@ let activeFilters = {
     rating: 0
 };
 
-function initFilters() {
-    // Search filter
-    const searchInput = document.querySelector('.search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', debounce(function() {
-            activeFilters.search = this.value.toLowerCase();
-            applyFilters();
-        }, 300));
-    }
-
-    // Category filters
-    document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const category = this.dataset.category;
-            if (this.checked) {
-                activeFilters.categories.push(category);
+const searchInput = document.querySelector('.search-input');
+if (searchInput) {
+    searchInput.addEventListener('input', function() {
+        const searchText = this.value.toLowerCase().trim();
+        const bookCards = document.querySelectorAll('.book-card');
+        
+        bookCards.forEach(function(card) {
+            const title = card.querySelector('.book-title').innerText.toLowerCase();
+            const author = card.querySelector('.book-author').innerText.toLowerCase();
+            
+            if (title.includes(searchText) || author.includes(searchText)) {
+                card.style.display = 'block';
             } else {
-                activeFilters.categories = activeFilters.categories.filter(c => c !== category);
+                card.style.display = 'none';
             }
-            applyFilters();
         });
     });
 
+}
+    // Category filters
+	const bookCards = document.querySelectorAll('.book-card');
+	console.log('Total cards found:', bookCards.length);
+	bookCards.forEach(function(card) {
+	    const genre = card.querySelector('.book-category');
+	    console.log('Genre element:', genre);
+	});
+	
+	document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+	    checkbox.addEventListener('change', function() {
+	        const checkedBoxes = document.querySelectorAll('.filter-checkbox:checked');
+	        const selectedCategories = Array.from(checkedBoxes).map(cb => cb.dataset.category);
+	        
+	        const bookCards = document.querySelectorAll('.book-card');
+	        bookCards.forEach(function(card) {
+				
+	            const genre = card.querySelector('.book-category').innerText.trim();
+				//console.log('Card genre: [' + genre + '] Selected: ' + JSON.stringify(selectedCategories));
+	            if (selectedCategories.length === 0 || selectedCategories.map(c => c.toLowerCase().trim()).includes(genre.toLowerCase().trim())) {
+					card.style.display = 'block';
+				} else {
+					 card.style.display = 'none';
+				}
+	        });
+	    });
+	});
+
     // Price range
-    const priceSlider = document.querySelector('.price-slider');
-    if (priceSlider) {
-        priceSlider.addEventListener('input', function() {
-            activeFilters.priceRange[1] = parseInt(this.value);
-            document.querySelector('.price-max').textContent = '₹' + this.value;
-            applyFilters();
-        });
-    }
+	const priceSlider = document.querySelector('.price-slider');
+	if (priceSlider) {
+	    // get all prices from book cards
+	    const allPrices = Array.from(document.querySelectorAll('.book-price span')).map(el => parseFloat(el.innerText.trim()));
+	    const minPrice = Math.min(...allPrices);
+	    const maxPrice = Math.max(...allPrices);
+
+	    // set slider range dynamically
+	    priceSlider.min = minPrice;
+	    priceSlider.max = maxPrice;
+	    priceSlider.value = maxPrice;
+	    document.querySelector('.price-max').textContent = '₹' + maxPrice;
+
+	    priceSlider.addEventListener('input', function() {
+	        const selectedMax = parseFloat(this.value);
+	        document.querySelector('.price-max').textContent = '₹' + selectedMax;
+
+	        const bookCards = document.querySelectorAll('.book-card');
+	        bookCards.forEach(function(card) {
+	            const priceEl = card.querySelector('.book-price span');
+	            const price = parseFloat(priceEl.innerText.trim());
+	            if (price <= selectedMax) {
+	                card.style.display = 'block';
+	            } else {
+	                card.style.display = 'none';
+	            }
+	        });
+	    });
+	}
 
     // Rating filter
     document.querySelectorAll('.rating-option').forEach(option => {
@@ -96,7 +112,7 @@ function initFilters() {
             sidebar.classList.toggle('open');
         });
     }
-}
+
 
 function applyFilters() {
     filteredBooks = allBooks.filter(book => {
@@ -382,4 +398,27 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
     };
+}
+
+
+//CATALOG PAGE
+
+document.addEventListener('DOMContentLoaded', function() {
+    initFilters();
+    initViewToggle();
+    initSorting();
+    initPagination();
+});
+
+
+// book catagory toggle button 
+function toggleFilter(btn) {
+    const options = btn.closest('.filter-card').querySelector('.filter-options');
+    if (options.style.display === 'none') {
+        options.style.display = 'block';
+        btn.textContent = '−';
+    } else {
+        options.style.display = 'none';
+        btn.textContent = '+';
+    }
 }

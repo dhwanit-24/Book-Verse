@@ -60,6 +60,21 @@ public class HomeController {
     @GetMapping("/catalog")
     public String catalog(Model model) {
     	model.addAttribute("books", bookRepo.findAll());
+    	model.addAttribute("totalBooks", bookRepo.count());
+    	model.addAttribute("activeBooks", bookRepo.countByActiveTrue());
+    	
+    	//genre count for catalog page
+    	List<Object[]> genreCounts = bookRepo.countAvailableBooksByGenre();
+    	List<Map.Entry<String, Long>> categoryList = new ArrayList<>();
+    	for(Object[] row : genreCounts) {
+    		categoryList.add(
+    				new AbstractMap.SimpleEntry<>(
+    						(String) row[0],
+    						(Long) row[1]
+    					)
+    			);
+    	}
+    	model.addAttribute("categoryCounts", categoryList);
     	return "catalog";
     }
     
