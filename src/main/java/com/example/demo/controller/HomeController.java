@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.entity.BookEntity;
 import com.example.demo.repository.BookRepo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class HomeController {
 
@@ -21,7 +23,9 @@ public class HomeController {
     private BookRepo bookRepo;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+    	//session
+    	model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
 
         List<BookEntity> allBooks = bookRepo.findByActiveTrue();
         //featured books random 3
@@ -58,7 +62,10 @@ public class HomeController {
     }
     
     @GetMapping("/catalog")
-    public String catalog(Model model) {
+    public String catalog(Model model, HttpSession session) {
+    	//session 
+    	model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+    	
     	model.addAttribute("books", bookRepo.findByActiveTrue());
     	model.addAttribute("totalBooks", bookRepo.count());
     	model.addAttribute("activeBooks", bookRepo.countByActiveTrue());
@@ -79,7 +86,10 @@ public class HomeController {
     }
     
     @GetMapping("/cart")
-    public String cart(Model model) {
+    public String cart(Model model, HttpSession session) {
+    	//session 
+    	model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+    	
     	return "cart";
     }
     

@@ -39,6 +39,9 @@
                     🛒
                     <span class="cart-count">0</span>
                 </a>
+                <a th:if="${loggedInUser != null}" href="/logout" class="nav-icon-btn" aria-label="Logout">
+			        <img src="/images/logout.png" style="width:24px; height:24px;">
+			    </a>
             </div>
             
             <button class="mobile-menu-btn" aria-label="Menu">
