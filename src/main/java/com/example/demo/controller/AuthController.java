@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepo;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AuthController {
 
@@ -28,7 +30,8 @@ public class AuthController {
     @PostMapping("/doLogin")
     public String doLogin(@RequestParam String email,
                           @RequestParam String password,
-                          Model model)
+                          Model model,
+                          HttpSession session)
     {
         UserEntity dbUser = userRepo.findByEmail(email);
 
@@ -41,7 +44,9 @@ public class AuthController {
             model.addAttribute("error", "Incorrect password");
             return "login";
         }
-
+        
+        session.setAttribute("loggedInUser", dbUser);
         return "redirect:/";
     }
+    
 }
