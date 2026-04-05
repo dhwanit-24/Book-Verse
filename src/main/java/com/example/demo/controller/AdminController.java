@@ -58,6 +58,16 @@ public class AdminController {
         return "redirect:/admin/inventory";
     }
     
+    @GetMapping("/toggleActive/{id}")
+    public String toggleActive(@PathVariable Integer id) {
+        BookEntity book = bookRepo.findById(id).orElse(null);
+        if(book != null) {
+            book.setActive(!book.getActive());
+            bookRepo.save(book);
+        }
+        return "redirect:/admin/inventory";
+    }
+    
 //to add book from here 
 //	@GetMapping("/addbook")
 //	public String addBook()

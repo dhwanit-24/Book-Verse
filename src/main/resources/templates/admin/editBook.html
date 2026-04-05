@@ -143,20 +143,6 @@ input, select, textarea {
 	        <input type="number" name="stock" min="0" th:value="${book.stock}">
 	    </div>
 	
-	    <!-- Visibility -->
-	    <div class="form-group">
-	        <label>
-	            <input type="hidden" name="active" value="false">
-
-				<input type="checkbox"
-				       name="active"
-				       value="true"
-				       th:checked="${book.active}">
-	            Active (Visible in Store)
-	        </label>
-	        <p th:text="${book.genre}">test</p>
-	    </div>
-	
 	</div>
 
     <div class="actions">

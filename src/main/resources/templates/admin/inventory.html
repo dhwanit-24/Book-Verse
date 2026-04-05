@@ -277,9 +277,9 @@ tr:hover {
 
     <!-- Status -->
     <td>
-        <span th:if="${b.active}" class="status active">Active</span>
-        <span th:if="${!b.active}" class="status inactive">Inactive</span>
-    </td>
+	    <a th:if="${b.active}" th:href="@{/admin/toggleActive/{id}(id=${b.id})}" class="status active">Active</a>
+	    <a th:if="${!b.active}" th:href="@{/admin/toggleActive/{id}(id=${b.id})}" class="status inactive">Inactive</a>
+	</td>
 
     <!-- Cover -->
     <td>
