@@ -142,7 +142,11 @@ input, select, textarea {
 	        <label>Stock Quantity</label>
 	        <input type="number" name="stock" min="0" th:value="${book.stock}">
 	    </div>
-	
+	    
+	    <div class="form-group full">
+	    	<label>Arrived On</label>
+	    	<input type="date" name="arrivedOn" th:value="${book.arrivedOn}">
+		</div>
 	</div>
 
     <div class="actions">
