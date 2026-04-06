@@ -17,4 +17,6 @@ public interface BookRepo extends JpaRepository<BookEntity, Integer>{
 	List<Object[]> countAvailableBooksByGenre();
 	
 	List<BookEntity> findByActiveTrue();
+	
+	List<BookEntity> findByGenreAndActiveTrueAndIdNot(String genre, Integer id);
 }
