@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +27,10 @@ public class BookController {
         if(book == null){
             return "redirect:/catalog"; // invalid id protection
         }
+        List<BookEntity> relatedBooks = bookRepo.findByGenreAndActiveTrueAndIdNot(book.getGenre(), id);
 
         model.addAttribute("book", book);
+        model.addAttribute("relatedBooks", relatedBooks);
         return "book-detail";
     }
 }
