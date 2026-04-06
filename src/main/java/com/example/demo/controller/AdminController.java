@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.BookEntity;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.BookRepo;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
@@ -15,43 +18,70 @@ public class AdminController {
     @Autowired
     private BookRepo bookRepo;
 
+    
     @GetMapping("/addBook")
-    public String addBook() {
+    public String addBook(HttpSession session) {
+    	if(!isAdmin(session)) return "redirect:/login";
         return "admin/addBook";
     }
 
     @PostMapping("/saveBook")
-    public String saveBook(@ModelAttribute BookEntity book) {
+    public String saveBook(@ModelAttribute BookEntity book, HttpSession session) {
+    	if(!isAdmin(session)) return "redirect:/login";
         bookRepo.save(book);
         return "redirect:/admin/inventory";
     }
     
     @GetMapping("/inventory")
-    public String showBooks(Model model) {
+    public String showBooks(Model model, HttpSession session) {
+    	if(!isAdmin(session)) return "redirect:/login";
     	model.addAttribute("books", bookRepo.findAll());
     	return "admin/inventory";
     }
     
     @GetMapping("/editBook/{id}")
-    public String editBook(@PathVariable Integer id, Model model)
+    public String editBook(@PathVariable Integer id, Model model, HttpSession session)
     {
+    	if(!isAdmin(session)) return "redirect:/login";
         BookEntity book = bookRepo.findById(id).orElse(null);
         model.addAttribute("book", book);
         return "admin/editBook";
     }
     
     @PostMapping("/updateBook")
-    public String updateBook(@ModelAttribute BookEntity book)
+    public String updateBook(@ModelAttribute BookEntity book, HttpSession session)
     {
+    	if(!isAdmin(session)) return "redirect:/login";
         bookRepo.save(book);
         return "redirect:/admin/inventory";
     }
     
     @GetMapping("/deleteBook/{id}")
-    public String deleteBook(@PathVariable Integer id)
+    public String deleteBook(@PathVariable Integer id, HttpSession session)
     {
-        bookRepo.deleteById(id);
+    	if(!isAdmin(session)) return "redirect:/login";
+        BookEntity book = bookRepo.findById(id).orElse(null);
+        if(book != null) {
+            book.setActive(false);
+            bookRepo.save(book);
+        }
         return "redirect:/admin/inventory";
+    }
+    
+    @GetMapping("/toggleActive/{id}")
+    public String toggleActive(@PathVariable Integer id, HttpSession session) {
+    	if(!isAdmin(session)) return "redirect:/login";
+        BookEntity book = bookRepo.findById(id).orElse(null);
+        if(book != null) {
+            book.setActive(!book.getActive());
+            bookRepo.save(book);
+        }
+        return "redirect:/admin/inventory";
+    }
+    
+    private boolean isAdmin(HttpSession session) {
+        UserEntity user = (UserEntity) session.getAttribute("loggedInUser");
+        return user != null && user.getRole().equals("ADMIN");
     }
     
 //to add book from here 

@@ -1,0 +1,126 @@
+@charset "UTF-8";
+/* ============================================
+   ADMIN PANEL - SIDE NAVBAR
+   ============================================ */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Side Navbar */
+.admin-sidenav {
+    width: 240px;
+    min-height: 100vh;
+    background: var(--primary-dark);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Logo area */
+.admin-sidenav-logo {
+    padding: 28px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-sidenav-logo a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-sidenav-logo span {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--text-white);
+    font-weight: 700;
+}
+
+.admin-sidenav-logo p {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Nav items */
+.admin-nav-items {
+    padding: 20px 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    border-left: 3px solid transparent;
+}
+
+.admin-nav-item:hover {
+    background: rgba(255,255,255,0.08);
+    color: var(--text-white);
+}
+
+.admin-nav-item.active {
+    background: rgba(255,255,255,0.12);
+    color: var(--text-white);
+    border-left: 3px solid var(--accent);
+}
+
+.admin-nav-item .nav-icon {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Logout at bottom */
+.admin-sidenav-footer {
+    padding: 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    border: none;
+    background: none;
+    width: 100%;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+}
+
+.admin-logout-btn:hover {
+    background: rgba(255, 107, 91, 0.15);
+    color: var(--accent);
+}
+
+/* Main content area */
+.admin-content {
+    margin-left: 240px;
+    flex: 1;
+    padding: 40px;
+    background: var(--bg-light);
+    min-height: 100vh;
+}

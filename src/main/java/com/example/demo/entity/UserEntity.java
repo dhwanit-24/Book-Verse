@@ -22,6 +22,8 @@ public class UserEntity {
 	
 	private String password;
 	
+	private String role = "User";
+
 	public Integer getId() {
 		return id;
 	}
@@ -54,4 +56,11 @@ public class UserEntity {
 		this.password = password;
 	}
 	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }
