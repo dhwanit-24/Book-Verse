@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Arrivals - BookVerse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <style>
+        .arrivals-page { padding: 120px 0 60px; min-height: 100vh; }
+        .page-heading { margin-bottom: 40px; }
+        .page-heading h1 { font-family: var(--font-display); font-size: 2.5rem; color: var(--primary); }
+        .page-heading p { color: var(--text-light); margin-top: 8px; }
+        .arrived-date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 6px;
+        }
+        .new-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="nav container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📚</div>
+                <span class="logo-text">Book<span>Verse</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/catalog" class="nav-link">Books</a></li>
+                <li><a href="/bestsellers" class="nav-link">Bestsellers</a></li>
+                <li><a href="/new-arrivals" class="nav-link active">New Arrivals</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon-btn" aria-label="Search">🔍</button>
+                <button class="nav-icon-btn" aria-label="Wishlist">♡</button>
+                <a href="/cart" class="nav-icon-btn" aria-label="Cart">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+                <a th:if="${loggedInUser == null}" href="/login" class="btn btn-accent" style="padding: 8px 18px; font-size: 0.85rem;">Log in</a>
+                <a th:if="${loggedInUser != null}" href="#" onclick="showLogoutModal()" class="nav-icon-btn" aria-label="Logout">
+                    <img src="/images/logout.png" style="width:24px; height:24px;">
+                </a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="arrivals-page">
+        <div class="container">
+            <div class="page-heading">
+                <h1>✨ New Arrivals</h1>
+                <p>Fresh additions to our collection — be the first to read them!</p>
+            </div>
+
+            <div class="book-grid">
+                <div class="book-card" th:each="b : ${books}">
+                    <div class="book-card-image">
+                        <img th:src="${b.imageUrl}" alt="cover">
+                    </div>
+                    <div class="book-card-content">
+                        <span class="new-badge">New</span>
+                        <span class="book-category" th:text="${b.genre}"></span>
+                        <h4 class="book-title">
+                            <a th:href="@{/book/{id}(id=${b.id})}" th:text="${b.title}"></a>
+                        </h4>
+                        <p class="book-author" th:text="${b.author}"></p>
+                        <div class="book-footer">
+                            <span class="book-price">₹ <span th:text="${b.price}"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon">📚</div>
+                        <span class="logo-text" style="color:white;">Book<span>Verse</span></span>
+                    </a>
+                    <p>Your destination for discovering amazing books.</p>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="/catalog">All Books</a></li>
+                        <li><a href="/new-arrivals">New Arrivals</a></li>
+                        <li><a href="/bestsellers">Bestsellers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 BookVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="logoutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:white; padding:40px; border-radius:16px; text-align:center; max-width:400px; width:90%;">
+            <h3 style="margin-bottom:10px; color:var(--primary);">Leaving so soon?</h3>
+            <p style="color:var(--text-light); margin-bottom:30px;">Are you sure you want to log out?</p>
+            <div style="display:flex; gap:12px; justify-content:center;">
+                <button onclick="hideLogoutModal()" style="padding:10px 24px; border-radius:8px; border:1px solid #ddd; background:white; cursor:pointer; font-weight:600;">Cancel</button>
+                <a href="/logout" style="padding:10px 24px; border-radius:8px; background:var(--accent); color:white; text-decoration:none; font-weight:600;">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script>
+    function showLogoutModal() { document.getElementById('logoutModal').style.display = 'flex'; }
+    function hideLogoutModal() { document.getElementById('logoutModal').style.display = 'none'; }
+    </script>
+
+</body>
+</html>

@@ -33,4 +33,6 @@ public class BookController {
         model.addAttribute("relatedBooks", relatedBooks);
         return "book-detail";
     }
+    
+    
 }

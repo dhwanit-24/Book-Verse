@@ -224,6 +224,11 @@
 			    <input type="number" name="stock" min="0" placeholder="50">
 			    <!-- later binds to BookEntity.stock -->
 			</div>
+			
+			<div class="form-group">
+				    <label>Arrived On</label>
+				    <input type="date" name="arrivedOn" th:value="${#temporals.format(#temporals.createNow(), 'dd-MM-yyyy')}">
+				</div>
 	
 			<!-- Visibility -->
 			<div class="form-group">

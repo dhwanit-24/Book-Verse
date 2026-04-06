@@ -19,4 +19,8 @@ public interface BookRepo extends JpaRepository<BookEntity, Integer>{
 	List<BookEntity> findByActiveTrue();
 	
 	List<BookEntity> findByGenreAndActiveTrueAndIdNot(String genre, Integer id);
+	
+	List<BookEntity> findByStockLessThanAndActiveTrueOrderByStockAsc(Integer stock);
+	
+	List<BookEntity> findByActiveTrueOrderByArrivedOnDesc();
 }

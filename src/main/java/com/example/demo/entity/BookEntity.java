@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,7 @@ public class BookEntity {
 	private String publisher;
 	private Integer publishedYear;
 	private Boolean active = true;
+	private LocalDate arrivedOn = LocalDate.now();
 	
 	public Integer getId() {
 		return id;
@@ -97,5 +100,11 @@ public class BookEntity {
 	}
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+	public LocalDate getArrivedOn() {
+		return arrivedOn;
+	}
+	public void setArrivedOn(LocalDate arrivedOn) {
+		this.arrivedOn = arrivedOn;
 	}
 }

@@ -93,5 +93,17 @@ public class HomeController {
     	return "cart";
     }
     
-    
+    @GetMapping("/bestsellers")
+    public String bestsellers(Model model, HttpSession session) {
+        model.addAttribute("books", bookRepo.findByStockLessThanAndActiveTrueOrderByStockAsc(10));
+        model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+        return "bestsellers";
+    }
+
+    @GetMapping("/new-arrivals")
+    public String newArrivals(Model model, HttpSession session) {
+        model.addAttribute("books", bookRepo.findByActiveTrueOrderByArrivedOnDesc());
+        model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+        return "new-arrivals";
+    }
 }
