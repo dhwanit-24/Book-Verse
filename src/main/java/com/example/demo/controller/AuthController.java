@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.UserRepo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -31,21 +32,31 @@ public class AuthController {
     public String doLogin(@RequestParam String email,
                           @RequestParam String password,
                           Model model,
-                          HttpSession session)
-    {
+                          HttpSession session,
+                          HttpServletRequest request) {
+        
         UserEntity dbUser = userRepo.findByEmail(email);
-
+        
         if(dbUser == null){
             model.addAttribute("error", "User does not exist");
             return "login";
         }
-
+        
         if(!dbUser.getPassword().equals(password)){
             model.addAttribute("error", "Incorrect password");
             return "login";
         }
         
-        session.setAttribute("loggedInUser", dbUser);
+        // Clear any existing session first
+        session.invalidate();
+        HttpSession newSession = request.getSession(true);
+        newSession.setAttribute("loggedInUser", dbUser);
+        
+        // If admin, redirect to inventory
+        if("ADMIN".equals(dbUser.getRole())) {
+            return "redirect:/admin/inventory";
+        }
+        
         return "redirect:/";
     }
     
