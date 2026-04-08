@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details - BookVerse</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <style>
+        .order-detail-page { padding: 120px 0 60px; background: var(--bg-light); min-height: 100vh; }
+        .detail-card { max-width: 800px; margin: 0 auto; background: white; border-radius: 32px; padding: 32px; box-shadow: var(--shadow-md); }
+        .detail-section { margin-bottom: 32px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .items-table { width: 100%; border-collapse: collapse; }
+        .items-table th, .items-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+    <div class="order-detail-page">
+        <div class="detail-card">
+            <h1 style="color: var(--primary);">Order Details</h1>
+            <div class="detail-section">
+                <div class="detail-row"><span>Order Number:</span><strong th:text="${order.orderNumber}"></strong></div>
+                <div class="detail-row"><span>Date:</span><span th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}"></span></div>
+                <div class="detail-row"><span>Status:</span><span class="order-status" th:text="${order.status}"></span></div>
+                <div class="detail-row"><span>Payment Method:</span><span th:text="${order.paymentMethod}"></span></div>
+                <div class="detail-row"><span>Shipping Address:</span><span th:text="${order.shippingAddress}"></span></div>
+                <div class="detail-row"><span>Phone:</span><span th:text="${order.phoneNumber}"></span></div>
+            </div>
+            <div class="detail-section">
+                <h3>Items</h3>
+                <table class="items-table">
+                    <thead><tr><th>Book</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                    <tbody>
+                        <tr th:each="item : ${items}">
+                            <td th:text="${item.book.title}"></td>
+                            <td th:text="${item.quantity}"></td>
+                            <td>₹ <span th:text="${item.priceAtTime}"></span></td>
+                            <td>₹ <span th:text="${item.priceAtTime * item.quantity}"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="detail-section">
+                <div class="detail-row"><span>Subtotal</span><span>₹ <span th:text="${order.totalAmount - (order.totalAmount >= 1000 ? 0 : 40)}"></span></span></div>
+                <div class="detail-row"><span>Shipping</span><span th:text="${order.totalAmount >= 1000 ? 'FREE' : '₹ 40'}"></span></div>
+                <div class="detail-row"><strong>Total</strong><strong>₹ <span th:text="${order.totalAmount}"></span></strong></div>
+            </div>
+            <a href="/my-orders" class="btn-outline" style="display: inline-block; margin-top: 20px;">← Back to Orders</a>
+        </div>
+    </div>
+</body>
+</html>	

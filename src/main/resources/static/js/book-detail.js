@@ -84,3 +84,34 @@ function addToCartFromDetail() {
 }
 
 window.addToCartFromDetail = addToCartFromDetail;
+
+function initQuantityControls() {
+    const minusBtn = document.querySelector('.qty-btn.minus');
+    const plusBtn = document.querySelector('.qty-btn.plus');
+    const qtyInput = document.querySelector('.qty-input');
+    const hiddenQty = document.getElementById('quantityHidden');
+
+    function syncHidden() {
+        if (hiddenQty) hiddenQty.value = quantity;
+    }
+
+    if (minusBtn) {
+        minusBtn.addEventListener('click', function() {
+            if (quantity > 1) { quantity--; qtyInput.value = quantity; syncHidden(); }
+        });
+    }
+
+    if (plusBtn) {
+        plusBtn.addEventListener('click', function() {
+            if (quantity < maxStock) { quantity++; qtyInput.value = quantity; syncHidden(); }
+        });
+    }
+
+    if (qtyInput) {
+        qtyInput.addEventListener('change', function() {
+            const val = parseInt(this.value);
+            if (val >= 1 && val <= maxStock) { quantity = val; } else { this.value = quantity; }
+            syncHidden();
+        });
+    }
+}

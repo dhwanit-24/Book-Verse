@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders - BookVerse</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <style>
+        .orders-page { padding: 120px 0 60px; background: var(--bg-light); min-height: 100vh; }
+        .orders-container { max-width: 900px; margin: 0 auto; }
+        .order-card { background: white; border-radius: 20px; padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+        .order-header { display: flex; justify-content: space-between; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px; }
+        .order-status { font-weight: 700; color: var(--accent); }
+        .order-items { font-size: 0.9rem; color: var(--text-medium); }
+        .view-link { color: var(--primary); font-weight: 600; text-decoration: none; }
+        .empty-orders { text-align: center; padding: 80px; background: white; border-radius: 32px; }
+    </style>
+</head>
+<body>
+    <div class="orders-page">
+        <div class="orders-container">
+            <h1 style="color: var(--primary); margin-bottom: 32px;">My Orders</h1>
+            <div th:if="${orders.isEmpty()}" class="empty-orders">
+                <p>You haven't placed any orders yet.</p>
+                <a href="/catalog" class="btn btn-accent">Start Shopping</a>
+            </div>
+            <div th:each="order : ${orders}" class="order-card">
+                <div class="order-header">
+                    <span><strong th:text="${order.orderNumber}"></strong><br><small th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy')}"></small></span>
+                    <span class="order-status" th:text="${order.status}"></span>
+                </div>
+                <div class="order-items">
+                    Total: ₹ <span th:text="${order.totalAmount}"></span> &nbsp;|&nbsp;
+                    Payment: <span th:text="${order.paymentMethod}"></span>
+                </div>
+                <div style="margin-top: 16px;">
+                    <a th:href="@{/order/{id}(id=${order.id})}" class="view-link">View Details →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
