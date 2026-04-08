@@ -60,7 +60,7 @@
                 <div class="info-item"><span class="info-label">Shipping:</span> <span th:text="${shipping == 0 ? 'FREE' : '₹ 40'}"></span></div>
                 <div class="total-row"><span>Grand Total</span><span>₹ <span th:text="${total}"></span></span></div>
 
-                <button class="btn-pdf" onclick="alert('PDF download will be available soon.')">📄 Download Invoice (PDF)</button>
+                <a th:href="@{/order/{id}/pdf(id=${order.id})}" class="btn-pdf" style="text-decoration:none; display:inline-block; text-align:center;">📄 Download Invoice (PDF)</a>
                 <a href="/" class="continue-btn">Continue Shopping →</a>
             </div>
         </div>

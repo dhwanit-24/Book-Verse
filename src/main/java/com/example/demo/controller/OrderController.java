@@ -7,15 +7,19 @@ import com.example.demo.model.CartItem;
 import com.example.demo.repository.BookRepo;
 import com.example.demo.repository.OrderItemRepo;
 import com.example.demo.repository.OrderRepo;
-import com.example.demo.repository.UserRepo;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import com.example.demo.service.PdfService;
 
 @Controller
 public class OrderController {
@@ -123,5 +127,45 @@ public class OrderController {
         model.addAttribute("shipping", shipping);
         model.addAttribute("loggedInUser", loggedInUser);
         return "order-confirmation";
+    }
+    
+    @Autowired private PdfService pdfService;
+    @GetMapping("/order/{orderId}/pdf")
+    public ResponseEntity<byte[]> downloadOrderPdf(@PathVariable Integer orderId, HttpSession session) {
+        UserEntity loggedInUser = (UserEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        OrderEntity order = orderRepo.findById(orderId).orElse(null);
+        if (order == null || !order.getUser().getId().equals(loggedInUser.getId())) {
+            return ResponseEntity.status(403).build();
+        }
+
+        // Get order items (from OrderItemRepo)
+        List<OrderItemEntity> orderItems = orderItemRepo.findByOrderId(orderId);
+        
+        // Convert to CartItem list for PDF generation
+        List<CartItem> cartItems = orderItems.stream()
+            .map(item -> new CartItem(
+                item.getBook().getId(),
+                item.getBook().getTitle(),
+                item.getBook().getAuthor(),
+                item.getBook().getImageUrl(),
+                item.getPriceAtTime(),
+                item.getQuantity()
+            ))
+            .collect(Collectors.toList());
+
+        double shipping = order.getTotalAmount() - cartItems.stream()
+            .mapToDouble(i -> i.getPrice() * i.getQuantity())
+            .sum();
+
+        byte[] pdfBytes = pdfService.generateOrderPdf(order, cartItems, shipping);
+        
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order-" + order.getOrderNumber() + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
     }
 }

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice - BookVerse</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica', Arial, sans-serif;
+            background: white;
+            padding: 40px;
+            color: #1a1a2e;
+        }
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .invoice-header {
+            background: #0d5c63;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .invoice-header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .order-number {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .invoice-body {
+            padding: 30px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0d5c63;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 8px;
+            margin: 20px 0 15px;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        .info-label {
+            width: 120px;
+            color: #666;
+        }
+        .info-value {
+            flex: 1;
+            font-weight: 500;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .total-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+        .total-amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0d5c63;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h1>📚 BookVerse</h1>
+            <div class="order-number">Order # <span th:text="${order.orderNumber}"></span></div>
+            <div th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}" style="font-size:14px;"></div>
+        </div>
+        <div class="invoice-body">
+            <div class="section-title">Delivery Address</div>
+            <div class="info-row">
+                <div class="info-label">Name:</div>
+                <div class="info-value" th:text="${order.fullName}"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Phone:</div>
+                <div class="info-value" th:text="${order.phoneNumber}"></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Address:</div>
+                <div class="info-value" th:text="${order.addressLine1} + ', ' + ${order.addressLine2} + ', ' + ${order.city} + ', ' + ${order.state} + ' - ' + ${order.pincode}"></div>
+            </div>
+            <div class="info-row" th:if="${order.landmark}">
+                <div class="info-label">Landmark:</div>
+                <div class="info-value" th:text="${order.landmark}"></div>
+            </div>
+
+            <div class="section-title">Payment Method</div>
+            <div class="info-row">
+                <div class="info-label">Method:</div>
+                <div class="info-value" th:text="${order.paymentMethod}"></div>
+            </div>
+
+            <div class="section-title">Items Ordered</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${items}">
+                        <td th:text="${item.title}"></td>
+                        <td th:text="${item.quantity}"></td>
+                        <td>₹ <span th:text="${item.price}"></span></td>
+                        <td>₹ <span th:text="${item.price * item.quantity}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-row">
+                <div class="info-label">Subtotal:</div>
+                <div class="info-value">₹ <span th:text="${subtotal}"></span></div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Shipping:</div>
+                <div class="info-value" th:text="${shipping == 0} ? 'FREE' : '₹ 40'"></div>
+            </div>
+            <div class="total-row">
+                <div class="total-amount">Grand Total: ₹ <span th:text="${order.totalAmount}"></span></div>
+            </div>
+        </div>
+        <div class="footer">
+            Thank you for shopping with BookVerse!<br>
+            For any queries, contact support@bookverse.com
+        </div>
+    </div>
+</body>
+</html>
