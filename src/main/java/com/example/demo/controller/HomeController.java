@@ -85,14 +85,6 @@ public class HomeController {
     	return "catalog";
     }
     
-    @GetMapping("/cart")
-    public String cart(Model model, HttpSession session) {
-    	//session 
-    	model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
-    	
-    	return "cart";
-    }
-    
     @GetMapping("/bestsellers")
     public String bestsellers(Model model, HttpSession session) {
         model.addAttribute("books", bookRepo.findByStockLessThanAndActiveTrueOrderByStockAsc(10));

@@ -98,21 +98,25 @@
 
                         <!-- Purchase -->
                         <div class="purchase-section">
-                            <div class="quantity-wrapper">
-                                <span class="quantity-label">Quantity:</span>
-                                <div class="quantity-control">
-                                    <button class="qty-btn minus">−</button>
-                                    <input type="number" class="qty-input" value="1" min="1" th:max="${book.stock}">
-                                    <button class="qty-btn plus">+</button>
-                                </div>
-                            </div>
-                            <div class="action-buttons">
-                                <button class="btn btn-accent btn-add-cart" onclick="addToCartFromDetail()">
-                                    🛒 Add to Cart
-                                </button>
-                                <button class="btn-wishlist" aria-label="Add to Wishlist">♡</button>
-                            </div>
-                        </div>
+						    <div class="quantity-wrapper">
+						        <span class="quantity-label">Quantity:</span>
+						        <div class="quantity-control">
+						            <button type="button" class="qty-btn minus">−</button>
+						            <input type="number" class="qty-input" id="quantityInput" value="1" min="1" th:max="${book.stock}">
+						            <button type="button" class="qty-btn plus">+</button>
+						        </div>
+						    </div>
+						    <form method="post" th:action="@{/cart/add}">
+						        <input type="hidden" name="bookId" th:value="${book.id}">
+						        <input type="hidden" name="quantity" id="quantityHidden" value="1">
+						        <div class="action-buttons">
+						            <button type="submit" class="btn btn-accent btn-add-cart">
+						                🛒 Add to Cart
+						            </button>
+						            <button type="button" class="btn-wishlist" aria-label="Add to Wishlist">♡</button>
+						        </div>
+						    </form>
+						</div>
 
                         <!-- Meta Info -->
                         <div class="book-meta">
