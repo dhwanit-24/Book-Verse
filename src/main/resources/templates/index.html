@@ -93,14 +93,10 @@
                     </div>
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <span th:text="${activeBookCount} + '+'" class="stat-number"></span> <div class="stat-label">Books</div>
+                            <span th:text="${activeBookCount} + ''" class="stat-number"></span> <div class="stat-label">Books</div>
                         </div>
                         <div class="stat-item">
-                            <span th:text="${totalUserCount} + '+'" class="stat-number"></span> <div class="stat-label">Readers</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">4.9</div>
-                            <div class="stat-label">Rating</div>
+                            <span th:text="${totalUserCount} + ''" class="stat-number"></span> <div class="stat-label">Readers</div>
                         </div>
                     </div>
                 </div>
@@ -135,23 +131,19 @@
             </div>
             
             <div class="book-grid">
-    <div class="book-card" th:each="b : ${books}">
-
-        <div class="book-card-image">
-            <img th:src="@{${b.imageUrl}}" alt="Book Cover">
-        </div>
-
-        <div class="book-card-content">
-            <span class="book-genre" th:text="${b.genre}"></span>
-
-            <h4 class="book-title" th:text="${b.title}"></h4>
-
-            <p class="book-author" th:text="${b.author}"></p>
-
-            <p class="book-price">₹ <span th:text="${b.price}"></span></p>
-        </div>
-
-    </div>
+		    <a th:href="@{/book/{id}(id=${b.id})}" style="text-decoration: none; color: inherit;" th:each="b : ${books}">
+		    <div class="book-card">
+		        <div class="book-card-image">
+		            <img th:src="@{${b.imageUrl}}" alt="Book Cover">
+		        </div>
+		        <div class="book-card-content">
+		            <span class="book-genre" th:text="${b.genre}"></span>
+		            <h4 class="book-title" th:text="${b.title}"></h4>
+		            <p class="book-author" th:text="${b.author}"></p>
+		            <p class="book-price">₹ <span th:text="${b.price}"></span></p>
+		        </div>
+		    </div>
+		</a>
 </div>
 
     </section>
