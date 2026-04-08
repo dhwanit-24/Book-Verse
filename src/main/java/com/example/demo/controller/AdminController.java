@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.BookEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.repository.BookRepo;
+import com.example.demo.repository.UserRepo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,6 +21,8 @@ public class AdminController {
     @Autowired
     private BookRepo bookRepo;
 
+    @Autowired
+    private UserRepo userRepo;
     
     @GetMapping("/addBook")
     public String addBook(HttpSession session) {
@@ -83,6 +88,34 @@ public class AdminController {
         UserEntity user = (UserEntity) session.getAttribute("loggedInUser");
         return user != null && user.getRole().equals("ADMIN");
     }
+    
+    @GetMapping("/users")
+    public String manageUsers(Model model, HttpSession session) {
+        if(!isAdmin(session)) return "redirect:/login";
+        
+        List<UserEntity> users = userRepo.findAllByOrderByIdDesc();
+        model.addAttribute("users", users);
+        model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+        return "admin/users";
+    }
+
+    @PostMapping("/users/update-role")
+    public String updateUserRole(@RequestParam Integer userId,
+                                 @RequestParam String role,
+                                 HttpSession session) {
+        if(!isAdmin(session)) return "redirect:/login";
+        
+        UserEntity loggedInAdmin = (UserEntity) session.getAttribute("loggedInUser");
+        UserEntity userToUpdate = userRepo.findById(userId).orElse(null);
+        
+        // Don't allow admin to change their own role
+        if(userToUpdate != null && !userToUpdate.getId().equals(loggedInAdmin.getId())) {
+            userToUpdate.setRole(role);
+            userRepo.save(userToUpdate);
+        }
+        
+        return "redirect:/admin/users";
+    }	
     
 //to add book from here 
 //	@GetMapping("/addbook")

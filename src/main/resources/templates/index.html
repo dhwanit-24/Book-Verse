@@ -32,8 +32,6 @@
             </ul>
             
             <div class="nav-actions">
-                <button class="nav-icon-btn" aria-label="Search">🔍</button>
-                <button class="nav-icon-btn" aria-label="Wishlist">♡</button>
                 <a href="/cart" class="nav-icon-btn" aria-label="Cart">
                     🛒
                     <span class="cart-count">0</span>
@@ -93,16 +91,10 @@
                     </div>
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="stat-number">50K+</div>
-                            <div class="stat-label">Books</div>
+                            <span th:text="${activeBookCount} + ''" class="stat-number"></span> <div class="stat-label">Books</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">100K+</div>
-                            <div class="stat-label">Readers</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">4.9</div>
-                            <div class="stat-label">Rating</div>
+                            <span th:text="${totalUserCount} + ''" class="stat-number"></span> <div class="stat-label">Readers</div>
                         </div>
                     </div>
                 </div>
@@ -137,23 +129,19 @@
             </div>
             
             <div class="book-grid">
-    <div class="book-card" th:each="b : ${books}">
-
-        <div class="book-card-image">
-            <img th:src="@{${b.imageUrl}}" alt="Book Cover">
-        </div>
-
-        <div class="book-card-content">
-            <span class="book-genre" th:text="${b.genre}"></span>
-
-            <h4 class="book-title" th:text="${b.title}"></h4>
-
-            <p class="book-author" th:text="${b.author}"></p>
-
-            <p class="book-price">₹ <span th:text="${b.price}"></span></p>
-        </div>
-
-    </div>
+		    <a th:href="@{/book/{id}(id=${b.id})}" style="text-decoration: none; color: inherit;" th:each="b : ${books}">
+		    <div class="book-card">
+		        <div class="book-card-image">
+		            <img th:src="@{${b.imageUrl}}" alt="Book Cover">
+		        </div>
+		        <div class="book-card-content">
+		            <span class="book-genre" th:text="${b.genre}"></span>
+		            <h4 class="book-title" th:text="${b.title}"></h4>
+		            <p class="book-author" th:text="${b.author}"></p>
+		            <p class="book-price">₹ <span th:text="${b.price}"></span></p>
+		        </div>
+		    </div>
+		</a>
 </div>
 
     </section>
@@ -180,20 +168,6 @@
     		</div>
 
 </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="section">
-        <div class="container">
-            <div class="newsletter">
-                <h2>Stay in the Loop</h2>
-                <p>Subscribe to our newsletter for book recommendations, exclusive deals, and author updates.</p>
-                <form class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
-                    <button type="submit" class="btn btn-accent">Subscribe</button>
-                </form>
-            </div>
         </div>
     </section>
 

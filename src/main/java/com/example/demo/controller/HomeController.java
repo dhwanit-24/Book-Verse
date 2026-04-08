@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.entity.BookEntity;
 import com.example.demo.repository.BookRepo;
+import com.example.demo.repository.UserRepo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,6 +22,9 @@ public class HomeController {
 
     @Autowired
     private BookRepo bookRepo;
+    
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/")
     public String home(Model model, HttpSession session) {
@@ -33,6 +37,13 @@ public class HomeController {
         List<BookEntity> featured = allBooks.stream().limit(3).toList();
         model.addAttribute("books", allBooks);
         model.addAttribute("featuredBooks", featured);
+        
+        
+        long activeBookCount = bookRepo.countByActiveTrue();
+        long totalUserCount = userRepo.count();
+        
+        model.addAttribute("activeBookCount", activeBookCount);
+        model.addAttribute("totalUserCount", totalUserCount);
         
         // random 4
         Collections.shuffle(allBooks);
