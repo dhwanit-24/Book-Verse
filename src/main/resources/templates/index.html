@@ -93,12 +93,10 @@
                     </div>
                     <div class="hero-stats">
                         <div class="stat-item">
-                            <div class="stat-number">50K+</div>
-                            <div class="stat-label">Books</div>
+                            <span th:text="${activeBookCount} + '+'" class="stat-number"></span> <div class="stat-label">Books</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">100K+</div>
-                            <div class="stat-label">Readers</div>
+                            <span th:text="${totalUserCount} + '+'" class="stat-number"></span> <div class="stat-label">Readers</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">4.9</div>
