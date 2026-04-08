@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation - BookVerse</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <style>
+        .receipt-page { padding: 120px 0 60px; background: var(--bg-light); min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .receipt-card { max-width: 800px; width: 100%; background: white; border-radius: 32px; box-shadow: var(--shadow-lg); overflow: hidden; }
+        .receipt-header { background: var(--primary); color: white; padding: 32px; text-align: center; }
+        .receipt-header h1 { margin: 0; font-family: var(--font-display); }
+        .order-number { font-size: 1.2rem; opacity: 0.9; margin-top: 8px; }
+        .receipt-body { padding: 32px; }
+        .section-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin: 20px 0 12px; border-bottom: 2px solid var(--bg-light); padding-bottom: 6px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .info-item { font-size: 0.9rem; }
+        .info-label { color: var(--text-light); }
+        .items-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .items-table th, .items-table td { padding: 12px 8px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 800; margin-top: 20px; padding-top: 16px; border-top: 2px solid var(--bg-light); }
+        .btn-pdf { background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 40px; font-weight: 600; cursor: pointer; margin-top: 24px; width: 100%; }
+        .btn-pdf:hover { opacity: 0.9; }
+        .continue-btn { display: inline-block; margin-top: 16px; text-align: center; width: 100%; background: var(--primary); color: white; padding: 12px; border-radius: 40px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="receipt-page">
+        <div class="receipt-card">
+            <div class="receipt-header">
+                <h1>🎉 Order Confirmed!</h1>
+                <div class="order-number" th:text="'Order #' + ${order.orderNumber}"></div>
+                <div th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}" style="font-size:0.9rem;"></div>
+            </div>
+            <div class="receipt-body">
+                <div class="section-title">Delivery Address</div>
+                <div class="info-grid">
+                    <div class="info-item"><span class="info-label">Name:</span> <span th:text="${order.fullName}"></span></div>
+                    <div class="info-item"><span class="info-label">Phone:</span> <span th:text="${order.phoneNumber}"></span></div>
+                    <div class="info-item"><span class="info-label">Address:</span> <span th:text="${order.addressLine1} + ', ' + ${order.addressLine2} + ', ' + ${order.city} + ', ' + ${order.state} + ' - ' + ${order.pincode}"></span></div>
+                    <div class="info-item"><span class="info-label">Landmark:</span> <span th:text="${order.landmark}"></span></div>
+                </div>
+
+                <div class="section-title">Payment Method</div>
+                <div><span th:text="${order.paymentMethod}"></span></div>
+
+                <div class="section-title">Items Ordered</div>
+                <table class="items-table">
+                    <thead><tr><th>Book</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+                    <tbody>
+                        <tr th:each="item : ${orderItems}">
+                            <td th:text="${item.title}"></td>
+                            <td th:text="${item.quantity}"></td>
+                            <td>₹ <span th:text="${item.price}"></span></td>
+                            <td>₹ <span th:text="${item.price * item.quantity}"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-item"><span class="info-label">Subtotal:</span> ₹ <span th:text="${total - (shipping == 0 ? 0 : 40)}"></span></div>
+                <div class="info-item"><span class="info-label">Shipping:</span> <span th:text="${shipping == 0 ? 'FREE' : '₹ 40'}"></span></div>
+                <div class="total-row"><span>Grand Total</span><span>₹ <span th:text="${total}"></span></span></div>
+
+                <button class="btn-pdf" onclick="alert('PDF download will be available soon.')">📄 Download Invoice (PDF)</button>
+                <a href="/" class="continue-btn">Continue Shopping →</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
