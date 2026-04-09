@@ -26,7 +26,6 @@
                 <li><a href="/new-arrivals" class="nav-link">New Arrivals</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="nav-icon-btn" aria-label="Wishlist">♡</button>
                 <a href="/cart" class="nav-icon-btn" aria-label="Cart">🛒</a>
                 <a th:if="${loggedInUser == null}" href="/login" class="btn btn-accent" style="padding: 8px 18px; font-size: 0.85rem;">Log in</a>
                 <a th:if="${loggedInUser != null}" href="#" onclick="showLogoutModal()" class="nav-icon-btn">

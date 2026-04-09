@@ -3,7 +3,6 @@
    ============================================ */
 
 .catalog-page {
-    padding-top: 100px;
     min-height: 100vh;
 }
 
@@ -370,6 +369,7 @@
 .catalog-grid.list-view .book-card-image {
     height: 100%;
     min-height: 220px;
+    padding-left: 50px;
 }
 
 .catalog-grid.list-view .book-card-content {
@@ -577,3 +577,34 @@
 .book-card:hover .buy-btn{
     animation:btnGlow 1.6s infinite;
 }
+
+.book-grid.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.book-grid.list-view .book-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* fix vertical alignment */
+    gap: 28px;
+    padding: 20px; /* THIS is what centers things visually */
+}
+.book-grid.list-view .book-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    align-items: flex-start; /* THIS fixes button stretching */
+}
+.book-grid.list-view .book-card-image {
+    width: 100px;
+    padding-top: 0;
+    height: auto;
+}
+.book-grid.list-view .book-card-image img {
+    position: static;
+    width: 100px;
+    height: auto;
+}
+
