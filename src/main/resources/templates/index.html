@@ -106,9 +106,10 @@
                         <span class="floating-star">📖</span>
                     </div>
                     <div class="book-stack">
-                        <div class="featured-book" th:each="b : ${featuredBooks}">
-        					<span class="book-spine" th:text="${b.title}"></span>
-   				 		</div>
+                       <div class="featured-book"
+						     th:each="b : ${featuredBooks}"
+						     th:style="'background-image: url(' + ${b.imageUrl} + ')'">
+						</div>
                     </div>
                 </div>
             </div>
