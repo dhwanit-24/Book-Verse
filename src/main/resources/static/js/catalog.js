@@ -1,6 +1,65 @@
 /* ============================================
    CATALOG PAGE JAVASCRIPT
    ============================================ */
+   
+   function initSorting() {
+       const sortSelect = document.querySelector('.sort-select');
+       if (!sortSelect) return;
+
+       sortSelect.addEventListener('change', function() {
+           const value = this.value;
+           const bookGrid = document.querySelector('.book-grid');
+           const bookCards = Array.from(document.querySelectorAll('.book-card'));
+
+           if (value === 'name-asc') {
+               bookCards.sort((a, b) => {
+                   const titleA = a.querySelector('.book-title').innerText.toLowerCase();
+                   const titleB = b.querySelector('.book-title').innerText.toLowerCase();
+                   return titleA.localeCompare(titleB);
+               });
+           } else if (value === 'name-desc') {
+               bookCards.sort((a, b) => {
+                   const titleA = a.querySelector('.book-title').innerText.toLowerCase();
+                   const titleB = b.querySelector('.book-title').innerText.toLowerCase();
+                   return titleB.localeCompare(titleA);
+               });
+           } else if (value === 'price-asc') {
+               bookCards.sort((a, b) => {
+                   const priceA = parseFloat(a.querySelector('.book-price span').innerText);
+                   const priceB = parseFloat(b.querySelector('.book-price span').innerText);
+                   return priceA - priceB;
+               });
+           } else if (value === 'price-desc') {
+               bookCards.sort((a, b) => {
+                   const priceA = parseFloat(a.querySelector('.book-price span').innerText);
+                   const priceB = parseFloat(b.querySelector('.book-price span').innerText);
+                   return priceB - priceA;
+               });
+           }
+
+           // Re-append sorted cards
+           bookCards.forEach(card => bookGrid.appendChild(card));
+       });
+   }
+
+   function initViewToggle() {
+       const viewBtns = document.querySelectorAll('.view-btn');
+       const bookGrid = document.querySelector('.book-grid');
+
+       viewBtns.forEach(btn => {
+           btn.addEventListener('click', function() {
+               const view = this.dataset.view;
+               viewBtns.forEach(b => b.classList.remove('active'));
+               this.classList.add('active');
+
+               if (view === 'list') {
+                   bookGrid.classList.add('list-view');
+               } else {
+                   bookGrid.classList.remove('list-view');
+               }
+           });
+       });
+   }
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -98,3 +157,4 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
 });
+

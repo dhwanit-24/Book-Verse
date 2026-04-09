@@ -144,16 +144,15 @@
                         </span>
                         <div class="toolbar-actions">
                             <select class="sort-select">
-                                <option value="featured">Featured</option>
-                                <option value="newest">Newest</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="rating">Highest Rated</option>
-                            </select>
+							    <option value="name-asc">Name: A to Z</option>
+							    <option value="name-desc">Name: Z to A</option>
+							    <option value="price-asc">Price: Low to High</option>
+							    <option value="price-desc">Price: High to Low</option>
+							</select>
                             <div class="view-toggle">
-                                <button class="view-btn active" data-view="grid" aria-label="Grid view">▦</button>
-                                <button class="view-btn" data-view="list" aria-label="List view">☰</button>
-                            </div>
+							    <button class="view-btn active" data-view="grid">📱 Grid</button>
+							    <button class="view-btn" data-view="list">📄 List</button>
+							</div>
                         </div>
                     </div>
 
@@ -248,5 +247,12 @@
     <!-- Scripts -->
     <script src="/js/common.js"></script>
     <script src="/js/catalog.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initSorting();
+        initViewToggle();
+        // any other init functions
+    });
+</script>
 </body>
 </html>
