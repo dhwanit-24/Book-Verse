@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.BookEntity;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.model.CartItem;
 import com.example.demo.repository.BookRepo;
 
@@ -24,6 +25,9 @@ public class CartController {
     public String addToCart(@RequestParam Integer bookId,
                             @RequestParam Integer quantity,
                             HttpSession session) {
+    	UserEntity loggedInUser = (UserEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) { session.setAttribute("redirectAfterLogin", "/book/" + bookId); return "redirect:/login"; }
+
 
         BookEntity book = bookRepo.findById(bookId).orElse(null);
         if (book == null) return "redirect:/catalog";
@@ -59,6 +63,9 @@ public class CartController {
 
     @GetMapping("/cart")
     public String viewCart(Model model, HttpSession session) {
+    	UserEntity loggedInUser = (UserEntity) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) { return "redirect:/login"; }
+        
         List<CartItem> cart = getCart(session);
         double subtotal = 0;
         for (CartItem item : cart) {
