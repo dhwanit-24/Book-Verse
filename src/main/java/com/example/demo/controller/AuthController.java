@@ -47,15 +47,36 @@ public class AuthController {
             return "login";
         }
         
-        // Clear any existing session first
-        session.invalidate();
-        HttpSession newSession = request.getSession(true);
-        newSession.setAttribute("loggedInUser", dbUser);
+        String redirectAfterLogin =
+        	    (String) session.getAttribute("redirectAfterLogin");
+
+        	// Clear any existing session first
+        	session.invalidate();
+
+        	HttpSession newSession = request.getSession(true);
+
+        	newSession.setAttribute("loggedInUser", dbUser);
+
+        	// Restore redirect after new session creation
+        	if (redirectAfterLogin != null) {
+        	    newSession.setAttribute("redirectAfterLogin",
+        	                            redirectAfterLogin);
+        	}
         
         // If admin, redirect to inventory
         if("ADMIN".equals(dbUser.getRole())) {
             return "redirect:/admin/inventory";
         }
+        
+        String redirect =
+        	    (String) newSession.getAttribute("redirectAfterLogin");
+
+        	if (redirect != null) {
+
+        	    newSession.removeAttribute("redirectAfterLogin");
+
+        	    return "redirect:" + redirect;
+        	}
         
         return "redirect:/";
     }

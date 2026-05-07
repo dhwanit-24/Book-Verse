@@ -84,6 +84,22 @@
             <p class="page-subtitle">Explore our complete collection of amazing books</p>
         </div>
     </section>
+    
+    <a onclick="goBack()">
+    	<img src="/images/back.png" style="height:30px; width:30px; margin-top:-30px; margin-left:20px; z-index: 999; display: inline-block; position: sticky;">
+    </a>
+
+	<script>
+		function goBack() {
+
+    	if (document.referrer &&
+        	document.referrer.includes(window.location.hostname)) {
+        	history.back();
+    	} else {
+        	window.location.href = "/";
+    		}
+		}
+	</script>
 
     <!-- Catalog Content -->
     <main class="catalog-page">

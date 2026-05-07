@@ -60,6 +60,21 @@ input, select, textarea {
 <div class="admin-container">
 <form th:action="@{/admin/updateBook}" method="post">
 	<input type="hidden" name="id" th:value="${book.id}">
+	<a onclick="goBack()">
+    	<img src="/images/back.png" style="height:30px; width:30px; margin-top:-80px; margin-left:-330px; z-index: 999; display: inline-block; position: fixed;">
+    </a>
+
+	<script>
+		function goBack() {
+
+    	if (document.referrer &&
+        	document.referrer.includes(window.location.hostname)) {
+        	history.back();
+    	} else {
+        	window.location.href = "/";
+    		}
+		}
+	</script>
 
 <h2>Edit Book</h2>
 
