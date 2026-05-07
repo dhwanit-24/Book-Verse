@@ -65,6 +65,21 @@
 
     <main class="arrivals-page">
         <div class="container">
+        <a onclick="goBack()">
+    	<img src="/images/back.png" style="height:30px; width:30px; margin-top:-30px; margin-left:-120px; z-index: 999; display: inline-block; position: fixed;">
+    </a>
+
+	<script>
+		function goBack() {
+
+    	if (document.referrer &&
+        	document.referrer.includes(window.location.hostname)) {
+        	history.back();
+    	} else {
+        	window.location.href = "/";
+    		}
+		}
+	</script>
             <div class="page-heading">
                 <h1>✨ New Arrivals</h1>
                 <p>Fresh additions to our collection — be the first to read them!</p>
