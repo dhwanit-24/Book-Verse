@@ -42,7 +42,7 @@
 				</a>                
                 <!-- Logout Modal -->
 				<div id="logoutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
-				    <div style="background:white; padding:40px; border-radius:16px; text-align:center; max-width:400px; width:90%;">
+				    <div style="background:white; padding:40px; border-radius:16px; text-align:center; max-width:400px; width:90%; margin:auto;">
 				        <h3 style="margin-bottom:10px; color:var(--primary);">Leaving so soon?</h3>
 				        <p style="color:var(--text-light); margin-bottom:30px;">Are you sure you want to log out?</p>
 				        <div style="display:flex; gap:12px; justify-content:center;">
@@ -56,6 +56,8 @@
 				function showLogoutModal() {
 				    const modal = document.getElementById('logoutModal');
 				    modal.style.display = 'flex';
+				    modal.style.alignItems = 'center';
+				    modal.style.justifyContent = 'center';
 				}
 				function hideLogoutModal() {
 				    const modal = document.getElementById('logoutModal');
@@ -64,6 +66,7 @@
 				</script>
 
             </div>
+            
             
             <button class="mobile-menu-btn" aria-label="Menu">
                 <span></span>

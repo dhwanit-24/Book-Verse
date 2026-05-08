@@ -58,7 +58,21 @@
     <!-- Header same as before (omitted for brevity, copy from previous checkout.html) -->
     <header class="header">...</header>
 
+	<a onclick="goBack()" style="position: fixed; top: 80px; left: 24px; z-index: 999; cursor: pointer;">
+    <img src="/images/back.png" style="height: 30px; width: 30px;">
+</a>
+
+<script>
+    function goBack() {
+        if (document.referrer && document.referrer.includes(window.location.hostname)) {
+            history.back();
+        } else {
+            window.location.href = "/";
+        }
+    }
+</script>
     <main class="checkout-page">
+    
         <div class="container">
             <h1 class="checkout-title">Checkout</h1>
             <div class="checkout-layout">
